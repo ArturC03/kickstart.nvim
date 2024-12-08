@@ -881,7 +881,7 @@ require('lazy').setup({
       -- Load the  here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd 'colorscheme carbonfox'
+      vim.cmd 'colorscheme catppuccin-mocha'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -934,7 +934,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'go' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'go', 'php_only' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1001,3 +1001,7 @@ require('lazy').setup({
     },
   },
 })
+
+vim.o.expandtab = true -- Converte tabs para espaços
+vim.o.shiftwidth = 2 -- Define a largura de indentação
+vim.o.tabstop = 2 -- Define a largura de uma tabulação

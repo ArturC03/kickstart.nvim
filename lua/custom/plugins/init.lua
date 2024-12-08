@@ -37,29 +37,12 @@ local plugins = {
   { 'L3MON4D3/LuaSnip' }, -- Snippet Engine
   { 'honza/vim-snippets' }, -- Pre-built snippets for various languages
   { 'tpope/vim-surround' },
+  { 'junegunn/fzf.vim' },
 
   { 'voldikss/vim-floaterm' },
   vim.keymap.set('n', '<leader>ft', ':FloatermToggle<CR>', { desc = '[F]loa [T]erminal' }),
 
-  {
-    'NvChad/nvim-colorizer.lua',
-    opts = {
-      user_default_options = {
-        mode = 'background',
-        names = false,
-      },
-    },
-  },
-
-  -- Animations
-  {
-    'echasnovski/mini.animate',
-    config = function()
-      require('mini.animate').setup {
-        config = {},
-      }
-    end,
-  },
+  { 'echasnovski/mini.animate' },
 }
 
 return plugins

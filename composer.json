@@ -1,0 +1,5 @@
+{
+    "require": {
+        "stillat/blade-parser": "^1.10"
+    }
+}
