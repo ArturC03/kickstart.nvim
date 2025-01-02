@@ -60,7 +60,7 @@ local plugins = {
         mapping = {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true }, -- Changed to <CR> for Enter key
         },
         sources = {
           { name = 'nvim_lsp' },
@@ -79,7 +79,7 @@ local plugins = {
         },
       })
     end,
-    event = 'VeryLazy', -- Load lazily
+    event = 'InsertEnter',
   },
 
   -- Snippet manager (Luasnip) - assuming you already have it in your config
@@ -107,7 +107,7 @@ local plugins = {
         disable_filetype = { 'TelescopePrompt', 'vim' },
       }
     end,
-    event = 'VeryLazy', -- Load lazily
+    event = 'InsertEnter', -- Load lazily
   },
 
   -- Telescope for searching Laravel related things (assuming it's already in your config)
@@ -121,6 +121,15 @@ local plugins = {
 
   -- Async utilities for promises (only if promise-async is not already in your config)
   { 'kevinhwang91/promise-async', event = 'VeryLazy' },
+  {
+    'ricardoramirezr/lali-components.nvim',
+    ft = 'blade',
+  },
+
+  {
+    'djaruun/laravel.nvim',
+    config = true,
+  },
 }
 
 -- Filetype-specific configurations
@@ -129,5 +138,4 @@ vim.cmd [[
   autocmd FileType blade set filetype=php                            " Force .blade.php to use PHP filetype
 ]]
 
--- Return the plugin list for kickstart.nvim
 return plugins

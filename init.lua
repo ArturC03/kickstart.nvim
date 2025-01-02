@@ -513,13 +513,14 @@ require('lazy').setup({
           -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc, mode)
             mode = mode or 'n'
+            -- Use the function reference directly (no `()` at the end)
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          -- map('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -551,8 +552,14 @@ require('lazy').setup({
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          -- map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+          vim.keymap.set('n', 'gd', function()
+            vim.lsp.buf.definition()
+          end, { noremap = true, silent = true })
+          vim.keymap.set('n', 'gD', function()
+            vim.lsp.buf.declaration()
+          end, { noremap = true, silent = true })
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
@@ -875,13 +882,13 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that  is.
     --
     -- If you want to see what s are already installed, you can use `:Telescope colorscheme`.
-    'EdenEast/nightfox.nvim',
+    'olimorris/onedarkpro.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the  here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd 'colorscheme catppuccin-mocha'
+      vim.cmd 'colorscheme onedark_dark'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
