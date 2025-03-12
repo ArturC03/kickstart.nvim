@@ -672,15 +672,41 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      local lspconfig = require 'lspconfig'
+
+      -- Define capabilities
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+      -- Define server-specific configurations (leave empty to use defaults)
+      local servers = {
+        ast_grep = {},
+        bashls = {},
+        clangd = {},
+        denols = {},
+        eslint = {},
+        gopls = {},
+        html = {},
+        intelephense = {},
+        jsonls = {},
+        lua_ls = {},
+        phpactor = {},
+        pyright = {},
+        pylsp = {},
+        rust_analyzer = {},
+        tailwindcss = {},
+        tsp = {},
+        ts_ls = {},
+        stimulus = {},
+      }
+
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
+            -- Merge capabilities and any specific settings defined for the server
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            lspconfig[server_name].setup(server)
           end,
         },
       }
