@@ -1,30 +1,45 @@
--- Plugin list for kickstart.nvim
+-- Lista de plugins para kickstart.nvim
 local plugins = {
-  -- Blade syntax highlighting plugin
+  -- Plugin para realce de sintaxe Blade
   { 'jwalton512/vim-blade' },
 
-  -- Laravel specific plugin
+  -- Plugin específico para Laravel
   {
     'adalessa/laravel.nvim',
     dependencies = {
-      'tpope/vim-dotenv', -- .env file support
-      'MunifTanjim/nui.nvim', -- UI components for Telescope
-      'kevinhwang91/promise-async', -- Async utilities
+      'tpope/vim-dotenv', -- Suporte para ficheiros .env
+      'MunifTanjim/nui.nvim', -- Componentes UI para Telescope
+      'kevinhwang91/promise-async', -- Utilitários assíncronos
     },
-    cmd = { 'Laravel' }, -- Lazy load on command
-    keys = { -- Key mappings for Laravel
+    cmd = { 'Laravel' }, -- Carregamento sob demanda ao usar o comando
+    keys = { -- Mapeamentos de teclas para Laravel
       { '<leader>la', ':Laravel artisan<cr>' },
       { '<leader>lr', ':Laravel routes<cr>' },
       { '<leader>lm', ':Laravel related<cr>' },
     },
-    event = { 'VeryLazy' }, -- Load when Neovim is idle
+    event = { 'VeryLazy' }, -- Carregar quando o Neovim estiver inativo
     opts = {},
     config = function()
-      -- Additional Laravel plugin configuration (if needed)
+      -- Configuração adicional do plugin Laravel (se necessário)
     end,
   },
 
-  -- LSP for PHP with Blade support (assuming nvim-lspconfig is already present)
+  -- Configuração do nvim-treesitter para suporte a PHP e Blade
+  {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = { 'php', 'blade' }, -- Instalar parsers para PHP e Blade
+        highlight = {
+          enable = true, -- Ativar realce de sintaxe
+        },
+      }
+    end,
+    event = 'BufRead', -- Carregar ao ler um ficheiro
+  },
+
+  -- LSP para PHP com suporte a Blade
   {
     'neovim/nvim-lspconfig',
     config = function()
@@ -37,30 +52,30 @@ local plugins = {
         },
       }
     end,
-    event = 'VeryLazy', -- Load lazily
+    event = 'VeryLazy', -- Carregar de forma preguiçosa
   },
 
-  -- Auto-completion plugin (nvim-cmp)
+  -- Plugin de auto-completação (nvim-cmp)
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp', -- LSP completion source
-      'hrsh7th/cmp-buffer', -- Buffer completion source
-      'hrsh7th/cmp-path', -- Path completion source
-      'hrsh7th/cmp-cmdline', -- Cmdline completion source
+      'hrsh7th/cmp-nvim-lsp', -- Fonte de completação LSP
+      'hrsh7th/cmp-buffer', -- Fonte de completação de buffer
+      'hrsh7th/cmp-path', -- Fonte de completação de caminho
+      'hrsh7th/cmp-cmdline', -- Fonte de completação de linha de comando
     },
     config = function()
       local cmp = require 'cmp'
       cmp.setup {
         snippet = {
           expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- Use Luasnip for snippets
+            require('luasnip').lsp_expand(args.body) -- Usar Luasnip para snippets
           end,
         },
         mapping = {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<CR>'] = cmp.mapping.confirm { select = true }, -- Changed to <CR> for Enter key
+          ['<CR>'] = cmp.mapping.confirm { select = true }, -- Alterado para <CR> para a tecla Enter
         },
         sources = {
           { name = 'nvim_lsp' },
@@ -70,7 +85,7 @@ local plugins = {
         },
       }
 
-      -- Blade-specific completion setup
+      -- Configuração específica para Blade
       cmp.setup.filetype('blade', {
         sources = {
           { name = 'nvim_lsp' },
@@ -82,7 +97,7 @@ local plugins = {
     event = 'InsertEnter',
   },
 
-  -- Snippet manager (Luasnip) - assuming you already have it in your config
+  -- Gerenciador de snippets (Luasnip)
   {
     'L3MON4D3/Luasnip',
     config = function()
@@ -94,10 +109,10 @@ local plugins = {
         },
       }
     end,
-    event = 'VeryLazy', -- Load lazily
+    event = 'VeryLazy', -- Carregar de forma preguiçosa
   },
 
-  -- Auto-pairing plugin for Blade tags and other pairs
+  -- Plugin de auto-fechamento para tags Blade e outros pares
   {
     'windwp/nvim-autopairs',
     config = function()
@@ -107,35 +122,38 @@ local plugins = {
         disable_filetype = { 'TelescopePrompt', 'vim' },
       }
     end,
-    event = 'InsertEnter', -- Load lazily
+    event = 'InsertEnter', -- Carregar de forma preguiçosa
   },
 
-  -- Telescope for searching Laravel related things (assuming it's already in your config)
+  -- Telescope para pesquisa relacionada ao Laravel
   { 'nvim-telescope/telescope.nvim', event = 'VeryLazy' },
 
-  -- Plugin for .env file support (if you already have vim-dotenv, you can skip this)
+  -- Plugin para suporte a ficheiros .env
   { 'tpope/vim-dotenv', event = 'VeryLazy' },
 
-  -- UI components for Telescope (only needed if nui.nvim isn't already in your config)
+  -- Componentes UI para Telescope
   { 'MunifTanjim/nui.nvim', event = 'VeryLazy' },
 
-  -- Async utilities for promises (only if promise-async is not already in your config)
+  -- Utilitários assíncronos para promessas
   { 'kevinhwang91/promise-async', event = 'VeryLazy' },
+
+  -- Componentes adicionais para Blade
   {
     'ricardoramirezr/lali-components.nvim',
     ft = 'blade',
   },
 
+  -- Plugin adicional para Laravel
   {
     'djaruun/laravel.nvim',
     config = true,
   },
 }
 
--- Filetype-specific configurations
+-- Configurações específicas para tipos de ficheiro
 vim.cmd [[
-  autocmd FileType blade setlocal shiftwidth=4 softtabstop=4 expandtab  " Set indentation for Blade files
-  autocmd FileType blade set filetype=php                            " Force .blade.php to use PHP filetype
+  autocmd FileType blade setlocal shiftwidth=4 softtabstop=4 expandtab  " Definir indentação para ficheiros Blade
+  autocmd BufRead,BufNewFile *.blade.php set filetype=blade             " Definir tipo de ficheiro para Blade
 ]]
 
 return plugins
