@@ -1,17 +1,17 @@
 return {
-{
-  -- Define Laravel Pint como o formatador padrão para PHP, com PHP CS Fixer como alternativa.
-  'stevearc/conform.nvim',
-  optional = true,
-  opts = {
-    formatters_by_ft = {
-      php = {
-        'pint',
-        'php_cs_fixer',
+  {
+    -- Define Laravel Pint como o formatador padrão para PHP, com PHP CS Fixer como alternativa.
+    'stevearc/conform.nvim',
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        php = {
+          'pint',
+          'php_cs_fixer',
+        },
       },
     },
   },
-},
   {
     -- Remove phpcs linter.
     'mfussenegger/nvim-lint',
@@ -35,7 +35,7 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         'blade',
-        'php_only',
+        'php',  -- Corrigido de 'php_only' para 'php'
       })
     end,
     config = function(_, opts)
