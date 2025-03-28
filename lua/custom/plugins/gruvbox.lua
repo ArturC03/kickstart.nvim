@@ -1,6 +1,6 @@
 local plugins = {
   {
-    'kanenorman/gruvbox-darker.nvim',
+    'morhetz/gruvbox',
     priority = 1000,
     config = function()
       -- Configuração do esquema de cores

@@ -1,5 +1,6 @@
 local plugins = {
 
+  { 'kevinhwang91/promise-async' },
   -- Gitsigns
   {
     'lewis6991/gitsigns.nvim',
@@ -24,19 +25,19 @@ local plugins = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
       'MunifTanjim/nui.nvim',
-      '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
+      '3rd/image.nvim',              -- Optional image support in preview window: See `# Preview Mode` for more information
     },
   },
 
   { 'arnamak/stay-centered.nvim' },
-  { 'neovim/nvim-lspconfig' }, -- LSP configuration
-  { 'hrsh7th/nvim-cmp' }, -- Autocompletion
-  { 'hrsh7th/cmp-nvim-lsp' }, -- LSP source for nvim-cmp
-  { 'hrsh7th/cmp-buffer' }, -- Buffer source for nvim-cmp
-  { 'hrsh7th/cmp-path' }, -- Path source for nvim-cmp
+  { 'neovim/nvim-lspconfig' },    -- LSP configuration
+  { 'hrsh7th/nvim-cmp' },         -- Autocompletion
+  { 'hrsh7th/cmp-nvim-lsp' },     -- LSP source for nvim-cmp
+  { 'hrsh7th/cmp-buffer' },       -- Buffer source for nvim-cmp
+  { 'hrsh7th/cmp-path' },         -- Path source for nvim-cmp
   { 'saadparwaiz1/cmp_luasnip' }, -- Luasnip completion source
-  { 'L3MON4D3/LuaSnip' }, -- Snippet Engine
-  { 'honza/vim-snippets' }, -- Pre-built snippets for various languages
+  { 'L3MON4D3/LuaSnip' },         -- Snippet Engine
+  { 'honza/vim-snippets' },       -- Pre-built snippets for various languages
   { 'tpope/vim-surround' },
   { 'junegunn/fzf.vim' },
 
